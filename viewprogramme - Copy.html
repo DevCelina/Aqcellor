@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+  <meta charset ="UTF-8">
+  <meta http-equiv="X-UA Compatible" content = "IE=edge">
+  <meta name="viewport" content="width=device-width , initial-scale=1.0">
+  <title>Admin Dashboard</title>
+
+  <style>
+    .course-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  
+    .course-block {
+      padding: 10px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      display: inline-block;
+    }
+  
+    /* Dark mode styles */
+    .mode-toggle.dark-mode .course-block {
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+  
+  
+  
+
+</head>
+<body>
+  <nav>
+    <div class ="logo-name">
+      <div class="logo-image"> 
+        <img src="logo.png">
+
+      </div>
+      <span class="logo_name"><b>AQCELLOR</b></span>
+
+      </div>
+      <div class="menu-items">
+        <ul class="nav-links">
+          <li>
+            <a href="#">
+              <i class="uil uil-estate"></i>
+            <span class="link-name">Dashboard</span>
+          </a>
+          </li>
+          <li>
+            <a href="/adminapi/adminview">
+              <i class="uil uil-user-plus"></i>
+            <span class="link-name">Onboarding</span>
+          </a>
+          </li>
+          <li>
+            <div class="dropdown">
+              <a href="" class="dropbtn">
+                <i class="uil uil-book-open"></i>
+                <span class="link-name">Accelerator Program</span>
+              </a>
+              <div class="dropdown-content">
+                <a href="/programme/visit">Program Visit</a>
+                <a href="/programme/view">Program View</a>
+              </div>
+          </a>
+          </li>
+          <li>
+            <a href="/programme/view">
+              <i class="uil uil-schedule"></i>
+               <span class="link-name">Schedule Event</span>
+          </a>
+          </li>
+          </ul>
+      
+
+        <ul class="logout-mode">
+        <li>
+          <a href="#">
+            <i class="uil uil-signout"></i>
+          <span class="link-name">Logout</span>
+        </a>
+        </li>
+        <li class="mode">
+          <a href="#">
+            <i class="uil uil-moon"></i>
+          <span class="link-name">Change Mode</span>
+        </a>
+        <div class="mode-toggle">
+        <span class="switch"></span>
+      </div>
+        </li>
+        </ul>
+      </div>
+  </nav>
+
+  <section class="dashboard">
+    <div class="top">
+      <i class="uil uil-bars sidebar-toggle"></i>
+
+      <div class="search-box">
+        <i class="uil uil-search"></i>
+        <input type="text" placeholder="Search here">
+
+      </div>
+      <img src="profile.jpeg" alt="">
+    </div>
+
+    <div class="dash-content">
+      <div class="overview">
+        <div class="title">
+          <i class="uil uil-tachometer-fast-alt"></i>
+          <span class="text">Admin Dashboard</span>
+        </div>
+
+        <div class="programme-view">
+          <div class="title">
+            <p class="programme-view-title">View Scheduled Programme</p>
+          </div>
+
+          <div class="course-container">
+            <% for (let i = 0; i < programmes.length; i++) { %>
+              <a class="course-block" href="/programme/<%= programmes[i]._id %>"><%= programmes[i].name %></a>
+            <% } %>
+          </div>
+
+</section>
+<script src="script.js"></script>
+
+<script>
+  // Function to toggle between light and dark mode
+  function toggleDarkMode() {
+    const courseBlocks = document.getElementsByClassName('course-block');
+    const modeToggle = document.querySelector('.mode-toggle');
+    const storedMode = localStorage.getItem('darkMode');
+
+    if (storedMode === null) {
+      // No stored mode, apply default light mode
+      modeToggle.classList.remove('dark-mode');
+      for (let i = 0; i < courseBlocks.length; i++) {
+        courseBlocks[i].style.backgroundColor = getRandomVibrantColor();
+        courseBlocks[i].style.color = '#fff';
+      }
+    } else if (storedMode === 'true') {
+      // Stored mode is dark mode
+      modeToggle.classList.add('dark-mode');
+      for (let i = 0; i < courseBlocks.length; i++) {
+        courseBlocks[i].style.backgroundColor = '#fff';
+        courseBlocks[i].style.color = '#000';
+      }
+    }
+
+    modeToggle.addEventListener('click', function() {
+      const isDarkMode = modeToggle.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+      for (let i = 0; i < courseBlocks.length; i++) {
+        if (isDarkMode) {
+          courseBlocks[i].style.backgroundColor = getRandomVibrantColor();
+          courseBlocks[i].style.color = '#fff';
+        } else {
+          courseBlocks[i].style.backgroundColor = '#fff' ;
+          courseBlocks[i].style.color = '#000';
+        }
+      }
+    });
+  }
+
+  // Generate a random vibrant color
+  function getRandomVibrantColor() {
+    const randomValue = () => Math.floor(Math.random() * 256); // Generate values between 0 and 255
+    const r = randomValue();
+    const g = randomValue();
+    const b = randomValue();
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  // Initialize dark mode toggle
+  toggleDarkMode();
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
